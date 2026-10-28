@@ -2,8 +2,8 @@
   "identifier": "exp232/trackrepair",
   "name": "Track Repair",
   "author": "Exp232",
-  "version": "1.0.0",
-  "description": "Adds a /repairtrack console command that restores track wear to 100% condition across the whole railroad.",
+  "version": "1.1.0",
+  "description": "Adds /repairtrack (restore all track to 100% condition) and /setwear (set all track to a chosen wear percentage) console commands.",
   "url": "https://github.com/Exp232/TrackRepair",
   "dependencies": {
     "required": [
