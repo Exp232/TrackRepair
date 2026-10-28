@@ -1,6 +1,6 @@
 # Track Repair
 
-Console commands for Railroader 0.6.0+ (host only; single player is always host):
+Console commands for Railroader 0.6.0+. They only work in sandbox saves (and the game's debug mode), and only for the host (single player is always host):
 
 - `/repairtrack` - set every completed track segment to 100% condition.
 - `/repairtrack 80%` - raise segments below 80% condition up to 80% (better track is untouched).

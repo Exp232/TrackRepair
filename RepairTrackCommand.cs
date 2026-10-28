@@ -20,8 +20,7 @@ namespace TrackRepair
         [ConsoleDefaultCommand]
         private static string Execute(string condition = "100%")
         {
-            if (!StateManager.IsHost)
-                throw new ConsoleCommandError("Host only.");
+            TrackWork.RequireSandbox();
 
             float target = ParseCondition(condition);
             var r = TrackWork.Apply(target, raiseOnly: true);
@@ -54,8 +53,7 @@ namespace TrackRepair
         [ConsoleDefaultCommand]
         private static string Execute(string wear = "0%")
         {
-            if (!StateManager.IsHost)
-                throw new ConsoleCommandError("Host only.");
+            TrackWork.RequireSandbox();
 
             string s = (wear ?? "0%").Trim().TrimEnd('%');
             if (!float.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out float percent))
@@ -83,6 +81,18 @@ namespace TrackRepair
 
     internal static class TrackWork
     {
+        /// <summary>
+        /// The same gate the game uses for editing track condition (FeatureEnables.CanEditTrackCondition): sandbox
+        /// saves, or the game's debug mode. Normal and Company saves are refused, as is anyone who is not the host.
+        /// </summary>
+        internal static void RequireSandbox()
+        {
+            if (!FeatureEnables.CanEditTrackCondition)
+                throw new ConsoleCommandError("Only available in sandbox mode.");
+            if (!StateManager.IsHost)
+                throw new ConsoleCommandError("Host only.");
+        }
+
         internal struct Result
         {
             public int Total, Changed;
