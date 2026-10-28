@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>TrackRepair</AssemblyName>
+    <RootNamespace>TrackRepair</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin\</OutputPath>
+
+    <RailroaderDir Condition="'$(RailroaderDir)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Railroader</RailroaderDir>
+    <ManagedDir>$(RailroaderDir)\Railroader_Data\Managed</ManagedDir>
+    <ModsDir Condition="'$(ModsDir)' == ''">$([System.Environment]::GetFolderPath(SpecialFolder.MyDocuments))\Railroader\Mods</ModsDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <PackageReference Include="Lib.Harmony" Version="2.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="$(ManagedDir)\Railroader.dll" Private="false" />
+    <Reference Include="$(ManagedDir)\Railroader.Modding.dll" Private="false" />
+    <Reference Include="$(ManagedDir)\UnityEngine.dll" Private="false" />
+    <Reference Include="$(ManagedDir)\UnityEngine.*.dll" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackFiles Include="$(OutDir)TrackRepair.dll;$(OutDir)0Harmony.dll;$(MSBuildProjectDirectory)\Info.json" />
+  </ItemGroup>
+
+  <Target Name="DeployToGame" AfterTargets="Build" Condition="'$(DeployToGame)' != 'false'">
+    <Copy SourceFiles="@(PackFiles)" DestinationFolder="$(ModsDir)\TrackRepair" />
+    <Message Importance="high" Text="Deployed TrackRepair to $(ModsDir)\TrackRepair" />
+  </Target>
+
+  <Target Name="PackageRelease" AfterTargets="Build" Condition="'$(Package)' == 'true'">
+    <PropertyGroup>
+      <StageDir>$(MSBuildProjectDirectory)\dist\stage\TrackRepair</StageDir>
+      <ReleaseVersion Condition="'$(ReleaseVersion)' == ''">1.0.0</ReleaseVersion>
+    </PropertyGroup>
+    <RemoveDir Directories="$(MSBuildProjectDirectory)\dist" />
+    <MakeDir Directories="$(StageDir)" />
+    <Copy SourceFiles="@(PackFiles)" DestinationFolder="$(StageDir)" />
+    <ZipDirectory SourceDirectory="$(MSBuildProjectDirectory)\dist\stage" DestinationFile="$(MSBuildProjectDirectory)\dist\TrackRepair-$(ReleaseVersion).zip" />
+  </Target>
+
+</Project>

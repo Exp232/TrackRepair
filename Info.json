@@ -1,0 +1,16 @@
+{
+  "identifier": "exp232/trackrepair",
+  "name": "Track Repair",
+  "author": "Exp232",
+  "version": "1.0.0",
+  "description": "Adds a /repairtrack console command that restores track wear to 100% condition across the whole railroad.",
+  "url": "https://github.com/Exp232/TrackRepair",
+  "dependencies": {
+    "required": [
+      "rr/game >=0.6.0"
+    ]
+  },
+  "assemblies": [
+    "TrackRepair.dll"
+  ]
+}
