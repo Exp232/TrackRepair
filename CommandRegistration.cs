@@ -22,7 +22,7 @@ namespace TrackRepair
                 var processor = FProcessor?.GetValue(handler) as CommandProcessor;
                 if (processor == null || !Done.Add(processor)) return;
                 processor.RegisterHandlers(typeof(CommandRegistration).Assembly);
-                ModEntryPoint.Log.Info("Registered /repairtrack and /setwear with the console.");
+                ModEntryPoint.Log.Info("Registered /repairtrack and /settrackwear with the console.");
             }
             catch (Exception e)
             {

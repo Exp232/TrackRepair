@@ -44,11 +44,11 @@ namespace TrackRepair
     }
 
     /// <summary>
-    /// /setwear [percent]  - sets the wear of every completed track segment to the given percentage
+    /// /settrackwear [percent]  - sets the wear of every completed track segment to the given percentage
     /// (0% = brand new, 100% = completely worn out; default 0%). Unlike /repairtrack this can also make track
     /// worse, which is useful for testing. Wear is the opposite of condition: 20% wear = 80% condition.
     /// </summary>
-    [ConsoleCommandHandler("/setwear", "Set all track to a wear percentage: /setwear 20% (0% = new, 100% = worn out)")]
+    [ConsoleCommandHandler("/settrackwear", "Set all track to a wear percentage: /settrackwear 20% (0% = new, 100% = worn out)")]
     public class SetWearCommand
     {
         [ConsoleDefaultCommand]
@@ -59,7 +59,7 @@ namespace TrackRepair
 
             string s = (wear ?? "0%").Trim().TrimEnd('%');
             if (!float.TryParse(s, NumberStyles.Float, CultureInfo.InvariantCulture, out float percent))
-                throw new ConsoleCommandError("Wear must be a number, e.g. /setwear 20% (0% = new, 100% = worn out).");
+                throw new ConsoleCommandError("Wear must be a number, e.g. /settrackwear 20% (0% = new, 100% = worn out).");
             if (percent < 0f || percent > 100f)
                 throw new ConsoleCommandError("Wear must be between 0% and 100%.");
 
