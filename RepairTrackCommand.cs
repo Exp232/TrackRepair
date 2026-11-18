@@ -110,7 +110,6 @@ namespace TrackRepair
             if (controller == null || graph == null)
                 throw new ConsoleCommandError("Track condition is not available yet (is a game loaded?).");
 
-            var now = TimeWeather.Now;
             var result = new Result();
             float before = 0f;
 
@@ -126,7 +125,8 @@ namespace TrackRepair
                     : Math.Abs(current - targetCondition) <= 0.0005f;
                 if (already) continue;
                 before += current;
-                controller.SetCondition(segment, targetCondition, now);
+                // 0.6.3 replaced the GameDateTime overload with days-since-cleared; 0 = cleared just now (same as before).
+                controller.SetCondition(segment, targetCondition, 0f);
                 result.Changed++;
             }
             result.AverageBefore = result.Changed > 0 ? before / result.Changed : 0f;

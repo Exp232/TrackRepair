@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.3
+- Fixed "Unhandled Error" when running either command on Railroader 0.6.3 (the game changed the track condition API the mod calls). Requires 0.6.3 or newer.
+
 ## 1.1.2
 - Both commands now only work in sandbox saves (the game's own `FeatureEnables.CanEditTrackCondition` gate, which also allows its debug mode). Other saves get "Only available in sandbox mode."
 
